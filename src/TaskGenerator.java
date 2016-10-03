@@ -13,8 +13,8 @@ public class TaskGenerator implements Runnable {
 
     public void run() {
         int arrivalTime = 0;
-        System.out.println("Generating random tasks");
-        Random rnd = new Random();
+        //System.out.println("Generating random tasks");
+        Random rnd = new Random(1);
         for(int i = 0; i < numTasks; i++) {
             Task t = new Task(arrivalTime++, rnd.nextInt(s.getMaxTaskTime())+1);
             s.addTask(t);
@@ -24,6 +24,6 @@ public class TaskGenerator implements Runnable {
                 System.out.println(ie.getMessage());
             }
         }
-        System.out.println("Done generating tasks");
+        //System.out.println("Done generating tasks");
     }
 }

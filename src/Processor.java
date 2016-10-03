@@ -2,7 +2,6 @@ public class Processor implements Runnable{
     private Task currentTask;
 
     public void run() {
-        System.out.println("Task:"+currentTask+" started");
         try {
             // Wait to simulate processing the job
             Thread.sleep(currentTask.getProcessingTime());
@@ -11,7 +10,6 @@ public class Processor implements Runnable{
         } catch (NullPointerException npe) {
             System.out.println("No Task assigned");
         }
-        System.out.println("Task:"+currentTask+" completed");
         currentTask = null;
     }
 

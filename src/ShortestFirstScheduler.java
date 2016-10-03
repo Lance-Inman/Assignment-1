@@ -1,11 +1,21 @@
-public class RoundRobinScheduler extends Scheduler{
+public class ShortestFirstScheduler extends Scheduler{
 
-    public RoundRobinScheduler(int numProcessors) {
+    public ShortestFirstScheduler (int numProcessors) {
         super(numProcessors);
     }
 
+    private int getShortestTaskIndex() {
+        int shortestIndex = 0;
+        for(int i = 0; i < tasks.size(); i++) {
+            if(tasks.get(i).getProcessingTime() < tasks.get(shortestIndex).getProcessingTime()) {
+                shortestIndex = i;
+            }
+        }
+        return shortestIndex;
+    }
+
     public void run() {
-        System.out.println("Running Round Robin scheduler...");
+        System.out.println("Running Shortest Time First scheduler...");
 
         // Fire up the Task Generator
         TaskGenerator tg = new TaskGenerator(numTasks, 1, this);
@@ -18,8 +28,6 @@ public class RoundRobinScheduler extends Scheduler{
         // Assign Tasks to available Processors until there are no Tasks left
         while(generatorThread.isAlive() || !tasks.isEmpty()) {
             try {
-                //printTasksRemaining();
-
                 // Increment the Last Assigned Processor Index
                 lapi = ++lapi % processors.length;
 
@@ -30,7 +38,7 @@ public class RoundRobinScheduler extends Scheduler{
 
                 // Assign the next task to the processor and run it
                 //System.out.println("Task:"+tasks.get(0)+" assigned to Processor:"+lapi);
-                processors[lapi].setTask(tasks.remove(0));
+                processors[lapi].setTask(tasks.remove(getShortestTaskIndex()));
                 Thread.sleep(1);
                 Thread t = new Thread(processors[lapi]);
                 t.start();
@@ -50,6 +58,6 @@ public class RoundRobinScheduler extends Scheduler{
             }
         }
 
-        System.out.println("Round Robin Scheduler Complete! Time Elapsed = "+getTimeElapsed()+"ms");
+        System.out.println("Shortest Time First Scheduler Complete! Time Elapsed = "+getTimeElapsed()+"ms");
     }
 }
