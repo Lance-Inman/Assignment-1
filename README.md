@@ -1,4 +1,4 @@
-##CSCI 460: Operating Systems — Assignment 1
+CSCI 460: Operating Systems — Assignment 1
 </br>
 This assignment is on processor management. Write a program that will simulate a
 multi-core non-preemptive process scheduler. The setup is as follows:</br>
